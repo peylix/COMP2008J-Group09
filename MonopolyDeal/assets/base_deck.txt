@@ -1,0 +1,97 @@
+# This file is a reference for the DeckReader to create cards.
+# The code will retrieve lines from this file
+# and create corresponding cards for the game.
+BalticAvenue	property	1	254,231,15	1	2	3
+ConnectAvenue  	property	1	254,231,15	1	2	3
+OrientalAvenue  	property	1	254,231,15	1	2	3
+AirportStation   	property	2	238,57,36	1	2	4
+VirginiaAvenue   	property	2	238,57,36	1	2	4
+WaterWorks  	property	2	238,57,36	1	2	4
+NewYorkAvenue 	property	2	247,126,35	1	3	5
+ShortLine 	property	2	247,126,35	1	3	5
+ElectricCompany	property	2	247,126,35	1	3	5
+IndianaAvenue   	property	3	239,56,120	2	3	6
+MarvinGardens   	property	3	239,56,120	2	3	6
+KentuckyAvenue  	property	3	239,56,120	2	3	6
+HappyValley   	property	4	135,165,215	3	5	8
+BroadWalk  	property	4	135,165,215	3	5	8
+ParkPlace	property	4	135,165,215	3	5	8
+PacificAvenue	property	4	19,165,92	2	4	7
+PennAvenue	property	4	19,165,92	2	4	7
+N.C.Avenue	property	4	19,165,92	2	4	7
+St.CharPlace  	property	3	89,12,56	2	5	n/a
+StatesAvenue	property	3	89,12,56	2	5	n/a
+B.O.Railroad	property	3	40,78,161	1	3	n/a
+StreetAvenue  	property	3	40,78,161	1	3	n/a
+Wild	property	5	wild	n/a	n/a	n/a
+Wild	property	5	wild	n/a	n/a	n/a
+Wild	property	5	wild	n/a	n/a	n/a
+Wild	property	5	wild	n/a	n/a	n/a
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Economic Boom	action	1	draw
+Sly Deal	action	3	steal1
+Sly Deal	action	3	steal1
+Sly Deal	action	3	steal1
+Forced Deal	action	3	trade
+Forced Deal	action	3	trade
+Forced Deal	action	3	trade
+Deal Breaker	action	5	steal3
+Deal Breaker	action	5	steal3
+Debt Collector	action	3	takemoney
+Debt Collector	action	3	takemoney
+Debt Collector	action	3	takemoney
+Double Rent	action	1	doublerent
+Double Rent	action	1	doublerent
+My Birthday	action	2	birthday
+My Birthday	action	2	birthday
+My Birthday	action	2	birthday
+JustSayNo	action	4	no
+JustSayNo	action	4	no
+JustSayNo	action	4	no
+Rent	action	1	rent	254,231,15	238,57,36
+Rent	action	1	rent	254,231,15	238,57,36
+Rent	action	1	rent	247,126,35	239,56,120
+Rent	action	1	rent	247,126,35	239,56,120
+Rent	action	1	rent	135,165,215	238,57,36
+Rent	action	1	rent	135,165,215	238,57,36
+Rent	action	1	rent	254,231,15	19,165,92
+Rent	action	1	rent	254,231,15	19,165,92
+Rent	action	1	rent	89,12,56	40,78,161
+Rent	action	1	rent	89,12,56	40,78,161
+Rent	action	1	rent	254,231,15	238,57,36
+Rent	action	1	rent	254,231,15	238,57,36
+Rent	action	1	rent	247,126,35	239,56,120
+Rent	action	1	rent	247,126,35	239,56,120
+Rent	action	1	rent	135,165,215	238,57,36
+Rent	action	1	rent	135,165,215	238,57,36
+Rent	action	1	rent	254,231,15	19,165,92
+Rent	action	1	rent	254,231,15	19,165,92
+Rent	action	1	rent	89,12,56	40,78,161
+Rent	action	1	rent	89,12,56	40,78,161
+One Million	money	1
+One Million	money	1
+One Million	money	1
+One Million	money	1
+One Million	money	1
+One Million	money	1
+Two Million	money	2
+Two Million	money	2
+Two Million	money	2
+Two Million	money	2
+Two Million	money	2
+Three Million	money	3
+Three Million	money	3
+Three Million	money	3
+Four Million	money	4
+Four Million	money	4
+Four Million	money	4
+Five Million	money	5
+Five Million	money	5
+Ten Million	money	10

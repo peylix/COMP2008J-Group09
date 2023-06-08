@@ -1,208 +1,349 @@
-package com.monopolydeal.model;
+package com.monopolydeal.controller;
 
+import com.monopolydeal.model.CardDeck;
 import com.monopolydeal.model.CardSet;
+import com.monopolydeal.model.Character;
 import com.monopolydeal.model.card.Card;
-import com.monopolydeal.model.card.PropertyCard;
-import com.monopolydeal.model.card.WildCard;
+import com.monopolydeal.util.DeckReader;
+import com.monopolydeal.view.CardComponent;
+import com.monopolydeal.view.GameFrame;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Iterator;
 
-public class Character {
+public class GameController{
+    private static final int WIN_AMOUNT = 50;
+    public static final int CHARACTER_AMOUNT = 3;
+    public static final int INIT_CARD_AMOUNT = 5;
+    public static final int NEW_CARD_AMOUNT = 2;
 
-    private int avatarIndex = 0;
-    private int money = 0;
-    private int blockTurns = 0;
-    private int moves = 3;
-    private boolean doubleRent = false;
-    private ArrayList<CardSet> properties;
-    private ArrayList<Card> hand;
+    public static final int MENU = 0;
+    public static final int CHARACTER = 1;
+    public static final int GAME = 2;
+    public static final int WIN = 3;
 
-    public Character() {
-        properties = new ArrayList<>();
-        hand = new ArrayList<>();
+    private GameFrame gameFrame;
+    private CardDeck deck;
+    private Character[] characters;
+    private boolean[] steal1;
+    private boolean[] steal3;
+    private Character currentCharacter;
+    private Character winner;
+    private int turn = 0;
+
+    public ListenTrade listenTrade;
+
+    public GameController() {
+        reset();
     }
 
-    public int getAvatarIndex() {
-        return avatarIndex;
+    public void setGameFrame(GameFrame gameFrame) {
+        this.gameFrame = gameFrame;
     }
 
-    public void setAvatarIndex(int avatarIndex) {
-        this.avatarIndex = avatarIndex;
+    public void changeScreen(int index){
+        gameFrame.changePanel(index);
     }
 
-    public int getMoney() {
-        return money;
+    public Character getWinner(){
+        return winner;
     }
 
-    public int getBlockTurns() {
-        return blockTurns;
+    public Character getCharacter(int index){
+        return characters[index];
     }
 
-    public void reduceBlockTurns(){
-        blockTurns--;
+    public boolean getSteal1Selected(int index){
+        return steal1[index];
     }
 
-    public void block(){
-        blockTurns += 2;
+    public boolean getSteal3Selected(int index){
+        return steal3[index];
     }
 
-    public boolean isDoubleRent() {
-        return doubleRent;
+    public Character getCurrentCharacter() {
+        return currentCharacter;
     }
 
-    public void setDoubleRent(boolean doubleRent) {
-        this.doubleRent = doubleRent;
+    public void setPlayerInfo(int index, int avatarIndex){
+        characters[index].setAvatarIndex(avatarIndex);
     }
 
-    public void addMoney(int amount){
-        money += amount;
+    public int getTurn() {
+        return turn;
     }
 
-    public void move() {
-        moves--;
+    public boolean couldMove(){
+        return currentCharacter.getMoves() > 0;
     }
 
-    public int getMoves() {
-        return moves;
+    public void depositCard(Card card){
+        currentCharacter.addMoney(card.getValue());
+        currentCharacter.removeCard(card);
+        currentCharacter.move();
     }
 
-    public void resetMoves(){
-        moves = 3;
-    }
-
-    public ArrayList<CardSet> getProperties() {
-        return properties;
-    }
-
-    public void addCard(Card card) {
-        hand.add(card);
-    }
-
-    public void removeCard(Card card){
-        hand.remove(card);
-    }
-
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
-
-    public boolean addProperty(Card card){
-        Color color = null;
-        if(card instanceof PropertyCard){
-            color = ((PropertyCard) card).getColor();
-        }else if(card instanceof WildCard){
-            color = ((WildCard) card).getColor();
+    public void addProperty(Card card){
+        if(currentCharacter.addProperty(card)){
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
         }
-        CardSet set = null;
-        for(CardSet property: properties){
-            if(property.getColor().equals(color)){
-                set = property;
+    }
+
+    public void addWildProperty(Card card){
+        if(currentCharacter.addProperty(card)){
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+        }
+    }
+
+    public void rent(Card card, Color color1, Color color2){
+        Character opponent = characters[getOpponent()];
+        int rentFee1 = currentCharacter.getRentFee(color1);
+        int rentFee2 = currentCharacter.getRentFee(color2);
+        if(currentCharacter.isDoubleRent()){
+            rentFee1 = rentFee1 * 2;
+            rentFee2 = rentFee2 * 2;
+        }
+        int originalMoney = opponent.getMoney();
+        Card rent1 = opponent.charge(rentFee1);
+        Card rent2 = opponent.charge(rentFee2);
+        int currentMoney = opponent.getMoney();
+        if(originalMoney - currentMoney == rentFee1){
+            currentCharacter.addMoney(rentFee1);
+            currentCharacter.setDoubleRent(false);
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+            return;
+        } else if(originalMoney - currentMoney == rentFee2) {
+            currentCharacter.addMoney(rentFee2);
+            currentCharacter.setDoubleRent(false);
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+            return;
+        }
+        if(rent1!=null){
+            currentCharacter.addProperty(rent1);
+            opponent.removeCard(rent1);
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+        } else if (rent2 != null) {
+            currentCharacter.addProperty(rent2);
+            opponent.removeCard(rent2);
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+        }
+    }
+
+    public void draw(Card currentCard){
+        for(int i=0;i<NEW_CARD_AMOUNT;i++){
+            if(deck.size()>0){
+                currentCharacter.addCard(deck.deal());
+            }
+        }
+        currentCharacter.removeCard(currentCard);
+        currentCharacter.move();
+    }
+
+    public void steal1Select(){
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            if(!currentCharacter.equals(characters[i])){
+                steal1[i] = true;
+            }
+        }
+    }
+
+    private void steal1Unselect(){
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            steal1[i] = false;
+        }
+    }
+
+    public void steal1(Card steal1){
+//        characters[index].removeCard(card);
+//        currentCharacter.addProperty(card);
+//        currentCharacter.removeCard(steal1);
+        Character opponent = characters[getOpponent()];
+        Card removedCard = opponent.getRemoveCardSteal();
+        opponent.removeCardSteal();
+        currentCharacter.addCard(removedCard);
+        currentCharacter.removeCard(steal1);
+        currentCharacter.move();
+    }
+
+    public void steal3Select(){
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            if(!currentCharacter.equals(characters[i])){
+                steal3[i] = true;
+            }
+        }
+    }
+
+    private void steal3Unselect(){
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            steal3[i] = false;
+        }
+    }
+
+    public void steal3(int index, Color color, Card steal3){
+        CardSet set = characters[index].removeSet(color);
+        currentCharacter.addSet(set);
+        currentCharacter.removeCard(steal3);
+        currentCharacter.move();
+        steal3Unselect();
+    }
+
+    public void trade(Card trade){
+//        currentCharacter.removeProperty(card1);
+//        currentCharacter.addProperty(card2);
+//        characters[index].removeProperty(card2);
+//        characters[index].addProperty(card1);
+//        currentCharacter.removeCard(trade);
+//        currentCharacter.move();
+
+        currentCharacter.removeCard(trade);
+        ArrayList<Card> hand = currentCharacter.getHand();
+        for(int i = 0; i < currentCharacter.getHand().size(); i++){
+            hand.get(i).addMouseListener(listenTrade);
+        }
+        Character opponent = characters[getOpponent()];
+        Card removedCard = opponent.getRemoveCardSteal();
+        opponent.removeCardSteal();
+        currentCharacter.addCard(removedCard);
+    }
+
+    public void takeMoney(Card card){
+        Character opponent = characters[getOpponent()];
+        int fee = 5;
+        int originalMoney = opponent.getMoney();
+        Card rent = opponent.charge(fee);
+        int currentMoney = opponent.getMoney();
+        if(originalMoney - currentMoney == fee){
+            currentCharacter.addMoney(fee);
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+            return;
+        }
+        if(rent!=null){
+            currentCharacter.addProperty(rent);
+            opponent.removeCard(rent);
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+        }else{
+            currentCharacter.removeCard(card);
+            currentCharacter.move();
+        }
+    }
+
+    public void birthday(Card card){
+        if(deck.size()>0){
+            currentCharacter.addCard(deck.deal());
+        }
+        currentCharacter.addMoney(2);
+        currentCharacter.removeCard(card);
+        currentCharacter.move();
+    }
+
+    public void doubleRent(Card card){
+        currentCharacter.setDoubleRent(true);
+        currentCharacter.removeCard(card);
+        currentCharacter.move();
+    }
+
+    private int getOpponent(){
+        int index = 0;
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            if(currentCharacter.equals(characters[i])){
+                index = (i + 1) % CHARACTER_AMOUNT;
                 break;
             }
         }
-        if(set == null){
-            set = new CardSet(color);
-            properties.add(set);
-        }
-        if(set.isFull()){
-            return false;
-        }
-        set.addProperty(card);
-        return true;
+        return index;
     }
 
-    public void removeProperty(Card card){
-        Color color = null;
-        if(card instanceof PropertyCard){
-            color = ((PropertyCard) card).getColor();
-        }else if(card instanceof WildCard){
-            color = ((WildCard) card).getColor();
-        }
-        Iterator<CardSet> iterator = properties.iterator();
-        while (iterator.hasNext()){
-            CardSet set = iterator.next();
-            if(set.getColor().equals(color)){
-                set.removeProperty(card);
-            }
-            if (set.size()==0) {
-                iterator.remove();
-            }
-        }
+    public void block(Card card){
+        characters[getOpponent()].block();
+        currentCharacter.removeCard(card);
+        currentCharacter.move();
     }
 
-    public void addSet(CardSet set){
-        boolean exist = false;
-        for(CardSet property: properties){
-            if(property.getColor().equals(set.getColor())){
-                exist = true;
-                for(int i=0;i<set.size();i++){
-                    property.addProperty(set.getCard(i));
-                }
-                break;
+    private void dealCard(){
+        int maxDraw = 0;
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            if(characters[i].getHand().size()==0){
+                maxDraw = INIT_CARD_AMOUNT;
+            }else{
+                maxDraw = NEW_CARD_AMOUNT;
             }
-        }
-        if(!exist){
-            properties.add(set);
-        }
-    }
-
-    public CardSet removeSet(Color color){
-        for(int i=0;i<properties.size();i++){
-            if(properties.get(i).getColor().equals(color)){
-                return properties.remove(i);
-            }
-        }
-        return null;
-    }
-
-    public int getRentFee(Color color){
-        int fee = 0;
-        for(int i=0;i<properties.size();i++){
-            CardSet set = properties.get(i);
-            if(set.getColor().equals(color)) {
-                Card card = set.getCard(0);
-                if(card instanceof PropertyCard){
-                    fee = ((PropertyCard)card).getPrice()[set.size()-1];
-                }else if(card instanceof WildCard){
-                    fee = ((WildCard)card).getPrice()[set.size()-1];
-                }
-                break;
-            }
-        }
-        return fee;
-    }
-
-    public Card charge(int fee){
-        if(money>=fee){
-            money-=fee;
-            return null;
-        }
-        Iterator<CardSet> setIterator = properties.iterator();
-        while(setIterator.hasNext()){
-            CardSet set = setIterator.next();
-            Iterator<Card> cardIterator = set.iterator();
-            while(cardIterator.hasNext()){
-                Card card = cardIterator.next();
-                if(card.getValue()==fee){
-                    return card;
-
+            for(int j=0;j<maxDraw;j++){
+                if(deck.size()>0) {
+                    characters[i].addCard(deck.deal());
                 }
             }
         }
-        return null;
     }
 
-    public int fullSet(){
-        int count = 0;
-        Iterator<CardSet> iterator = properties.iterator();
-        while(iterator.hasNext()){
-            if(iterator.next().isFull()){
-                count++;
+    private boolean checkWin(){
+        if(currentCharacter.getMoney()>=WIN_AMOUNT){
+            winner = currentCharacter;
+            return true;
+        }
+        if(currentCharacter.fullSet()==3){
+            winner = currentCharacter;
+            return true;
+        }
+        return false;
+    }
+
+    public void nextTurn(){
+        if(checkWin()){
+            gameFrame.changePanel(WIN);
+            return;
+        }
+        if(currentCharacter.getBlockTurns()>0){
+            currentCharacter.reduceBlockTurns();
+        }
+        turn = (turn + 1) % CHARACTER_AMOUNT;
+        if(turn == 0){
+            dealCard();
+        }
+        currentCharacter = characters[turn];
+        currentCharacter.resetMoves();
+    }
+
+    public void reset(){
+        characters = new Character[CHARACTER_AMOUNT];
+        steal1 = new boolean[CHARACTER_AMOUNT];
+        steal3 = new boolean[CHARACTER_AMOUNT];
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            characters[i] = new Character();
+            steal1[i] = false;
+            steal3[i] = false;
+        }
+        turn = 0;
+        currentCharacter = characters[turn];
+        winner = null;
+        deck = DeckReader.generateDeck();
+        deck.shuffle();
+        for(int i=0;i<CHARACTER_AMOUNT;i++){
+            for(int j=0;j<INIT_CARD_AMOUNT;j++){
+                characters[i].addCard(deck.deal());
             }
         }
-        return count;
+    }
+
+
+    public class ListenTrade extends MouseAdapter{
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if(e.getButton() == MouseEvent.BUTTON1){
+                if(e.getSource() instanceof CardComponent){
+                    Card card = ((CardComponent) e.getSource()).getCard();
+                    currentCharacter.removeCard(card);
+                }
+            }
+        }
     }
 }
-
