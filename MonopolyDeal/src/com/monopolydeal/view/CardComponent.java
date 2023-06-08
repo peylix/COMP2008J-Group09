@@ -1,4 +1,4 @@
-package com.monopolydeal.model.card;
+package com.monopolydeal.view;
 
 import com.monopolydeal.model.card.ActionCard;
 import com.monopolydeal.model.card.Card;

@@ -5,7 +5,7 @@ import com.monopolydeal.model.CardSet;
 import com.monopolydeal.model.Character;
 import com.monopolydeal.model.card.Card;
 import com.monopolydeal.util.DeckReader;
-import com.monopolydeal.model.card.CardComponent;
+import com.monopolydeal.view.CardComponent;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;

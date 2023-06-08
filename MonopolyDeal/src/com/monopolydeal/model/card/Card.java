@@ -1,6 +1,6 @@
 package com.monopolydeal.model.card;
 
-public abstract class Card {
+public abstract class Card implements com.monopolydeal.Interface.Card {
     public static final int MONEY_CARD = 0;
     public static final int PROPERTY_CARD = 1;
     public static final int WILD_CARD = 2;
