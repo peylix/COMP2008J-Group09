@@ -9,7 +9,7 @@ public class DoubleWildCard extends Card {
     private int[] priceDownward;
 
     public DoubleWildCard(String name, int value, Color colorUpward, Color colorDownward,
-                          String priceUpward1, String priceUpward2, String priceUpware3,
+                          String priceUpward1, String priceUpward2, String priceUpward3,
                           String priceDownward1, String priceDownward2, String priceDownward3) {
         super(name, Card.DOUBLE_WILD_CARD, value);
         this.colorUpward = colorUpward;
@@ -18,7 +18,7 @@ public class DoubleWildCard extends Card {
         priceDownward = new int[3];
         priceUpward[0] = Integer.parseInt(priceUpward1);
         priceUpward[1] = Integer.parseInt(priceUpward2);
-        priceUpward[3] = Integer.parseInt(priceUpware3);
+        priceUpward[3] = Integer.parseInt(priceUpward3);
         priceDownward[0] = Integer.parseInt(priceDownward1);
         priceDownward[1] = Integer.parseInt(priceDownward2);
         priceDownward[2] = Integer.parseInt(priceDownward3);
