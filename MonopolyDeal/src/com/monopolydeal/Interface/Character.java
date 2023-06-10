@@ -1,7 +1,8 @@
 package com.monopolydeal.Interface;
 
+import com.monopolydeal.model.CardSet;
+
 import java.awt.Color;
-import java.util.ArrayList;
 
 public interface Character {
     int getAvatarIndex();
