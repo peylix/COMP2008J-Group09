@@ -6,6 +6,7 @@ public abstract class Card implements com.monopolydeal.Interface.Card {
     public static final int WILD_CARD = 2;
     public static final int RENT_CARD = 3;
     public static final int ACTION_CARD = 4;
+    public static final int DOUBLE_WILD_CARD = 5;
 
     protected String name;
     protected int type;

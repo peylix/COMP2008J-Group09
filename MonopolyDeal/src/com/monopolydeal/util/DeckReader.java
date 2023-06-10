@@ -38,8 +38,17 @@ public class DeckReader {
     private static Card parsePropertyCard(String[] params){
         String name = params[0];
         int value = Integer.parseInt(params[2]);
-        if(params[3].equals("wild")){
+        if (params[3].equals("multi-wild")) {
             return new WildCard(name, value);
+        } else if (params[3].equals("double-wild")) {
+            String[] cu = params[4].split(",");
+            String[] cd = params[5].split(",");
+            Color colorUpward = new Color(Integer.parseInt(cu[0]), Integer.parseInt(cu[1]),
+                    Integer.parseInt(cu[2]));
+            Color colorDownward = new Color(Integer.parseInt(cd[0]), Integer.parseInt(cd[1]),
+                    Integer.parseInt(cd[2]));
+            return new DoubleWildCard(name, value, colorUpward, colorDownward,
+                    params[6], params[7], params[8], params[9], params[10], params[11]);
         }
         String[] c = params[3].split(",");
         Color color = new Color(Integer.parseInt(c[0]),Integer.parseInt(c[1]),
