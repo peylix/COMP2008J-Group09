@@ -19,7 +19,7 @@ public class Character implements com.monopolydeal.Interface.Character {
     private boolean doubleRent = false;
     private ArrayList<CardSet> properties;
     private ArrayList<Card> hand;
-    private ArrayList<Integer> dollars;
+    public ArrayList<Integer> dollars;
 
     public List<Integer> getDollars(){
         return dollars;
@@ -70,10 +70,6 @@ public class Character implements com.monopolydeal.Interface.Character {
 
     public void move() {
         moves--;
-        moves--;
-        if(GameController.isTest){
-            GameController.getInfo();
-        }
     }
 
     public int getMoves() {

@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class GameController {
-
-    public static boolean isTest = false;
     private static final int WIN_AMOUNT = 50;
     public static final int CHARACTER_AMOUNT = 3;
     public static final int INIT_CARD_AMOUNT = 5;
@@ -29,7 +27,7 @@ public class GameController {
 
     private GameFrame gameFrame;
     private CardDeck deck;
-    public static Character[] characters;
+    public  Character[] characters;
     private boolean[] steal1;
     private boolean[] steal3;
     private Character currentCharacter;
@@ -351,19 +349,4 @@ public class GameController {
         }
     }
 
-
-    public static void getInfo(){
-
-        for (int i = 0; i < 3; i++) {
-            getInfo(i);
-        }
-    }
-
-    public static void getInfo(int i){
-        Character character = GameController.characters[i];
-        System.out.print("===player:"+(i+1));
-        System.out.print("  money:"+character.getMoney()+",money cards:"+character.getDollars().size()+",detail:"+character.getDollars());
-        System.out.println("    hand cards:"+character.getHand().size()+",detail:"+(character.getHand().stream().map(card -> card.getName()).collect(Collectors.toList())));
-
-    }
 }
