@@ -7,6 +7,7 @@ import com.monopolydeal.model.card.WildCard;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class Character implements com.monopolydeal.Interface.Character {
 
@@ -18,6 +19,10 @@ public class Character implements com.monopolydeal.Interface.Character {
     private ArrayList<CardSet> properties;
     private ArrayList<Card> hand;
     private ArrayList<Integer> dollars;
+
+    public List<Integer> getDollars(){
+        return dollars;
+    }
 
     public Character() {
         properties = new ArrayList<>();

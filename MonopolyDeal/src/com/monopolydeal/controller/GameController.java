@@ -12,8 +12,11 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
-public class GameController{
+public class GameController {
+    //����Ƿ���test����test��־
+    public static boolean isTest = false;
     private static final int WIN_AMOUNT = 50;
     public static final int CHARACTER_AMOUNT = 3;
     public static final int INIT_CARD_AMOUNT = 5;
@@ -26,7 +29,7 @@ public class GameController{
 
     private GameFrame gameFrame;
     private CardDeck deck;
-    private Character[] characters;
+    public static Character[] characters;
     private boolean[] steal1;
     private boolean[] steal3;
     private Character currentCharacter;
@@ -242,6 +245,7 @@ public class GameController{
             currentCharacter.addCard(deck.deal());
         }
         currentCharacter.addMoney(2);
+        characters[getOpponent()].charge(2);
         currentCharacter.removeCard(card);
         currentCharacter.move();
     }
@@ -311,14 +315,6 @@ public class GameController{
         }
         currentCharacter = characters[turn];
         currentCharacter.resetMoves();
-        if(currentCharacter.getHand().size() > 7){
-            int record = 0;
-            for(int i = 0; i < currentCharacter.getHand().size() - 6; i++){
-                Card removedCard = currentCharacter.getHand().get(record);
-                currentCharacter.removeCard(removedCard);
-                record++;
-            }
-        }
     }
 
     public void reset(){
@@ -353,5 +349,21 @@ public class GameController{
                 }
             }
         }
+    }
+
+
+    public static void getInfo(){
+        //��ӡ������������ĵ����
+        for (int i = 0; i < 3; i++) {
+            getInfo(i);
+        }
+    }
+
+    public static void getInfo(int i){
+        Character character = GameController.characters[i];
+        System.out.print("===player:"+(i+1));
+        System.out.print("  money:"+character.getMoney()+",money cards:"+character.getDollars().size()+",detail:"+character.getDollars());
+        System.out.println("    hand cards:"+character.getHand().size()+",detail:"+(character.getHand().stream().map(card -> card.getName()).collect(Collectors.toList())));
+
     }
 }
