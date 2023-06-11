@@ -13,7 +13,7 @@ public class LauncherTest {
 		controller.setGameFrame(gameFrame);
 		Scanner sc = new Scanner(System.in);
 		while (true){
-			//输入想要查询玩家输入 1 或 2 或 3
+			//input 1 or 2 or 3 find player
 			System.out.println("Please input player id. (1 or 2 or 3)");
 			String input = sc.next();
 			int playerId = 0;

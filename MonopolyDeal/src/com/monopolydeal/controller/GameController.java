@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class GameController {
-    //����Ƿ���test����test��־
+
     public static boolean isTest = false;
     private static final int WIN_AMOUNT = 50;
     public static final int CHARACTER_AMOUNT = 3;
@@ -353,7 +353,7 @@ public class GameController {
 
 
     public static void getInfo(){
-        //��ӡ������������ĵ����
+
         for (int i = 0; i < 3; i++) {
             getInfo(i);
         }

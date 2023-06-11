@@ -1,5 +1,6 @@
 package com.monopolydeal.model;
 
+import com.monopolydeal.controller.GameController;
 import com.monopolydeal.model.card.Card;
 import com.monopolydeal.model.card.PropertyCard;
 import com.monopolydeal.model.card.WildCard;
@@ -69,6 +70,10 @@ public class Character implements com.monopolydeal.Interface.Character {
 
     public void move() {
         moves--;
+        moves--;
+        if(GameController.isTest){
+            GameController.getInfo();
+        }
     }
 
     public int getMoves() {

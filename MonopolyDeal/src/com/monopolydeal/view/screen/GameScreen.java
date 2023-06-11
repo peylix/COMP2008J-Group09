@@ -283,6 +283,10 @@ public class GameScreen extends BaseScreen {
                     || e.getSource().equals(turnLabel)) {
                 controller.nextTurn();
                 update();
+                //Switch characters to print player information
+                if ((GameController.isTest)){// Test mode Opens logs
+                        GameController.getInfo();
+                }
             }
         }
     }
