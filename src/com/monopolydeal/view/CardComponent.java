@@ -224,10 +224,10 @@ public class CardComponent extends JLabel implements com.monopolydeal.model.Inte
             g.drawString("Rent", 37, 50);
             // info
             g.setFont(Resources.RENT_INFO_FONT);
-            g.drawString("Your opponent must", 7, 90);
-            g.drawString("pay you rent for", 17, 100);
-            g.drawString("properties you own", 12, 110);
-            g.drawString("in these colours.", 18, 120);
+            g.drawString("Charge others", 7, 90);
+            g.drawString("rent on properties", 17, 100);
+            g.drawString("that match the color", 12, 110);
+            g.drawString("of the Rent card.", 18, 120);
             // price
             g.setFont(Resources.CARD_NAME_FONT);
             g.drawString(this.card.getValue() + "M", 5, 15);
@@ -265,8 +265,6 @@ public class CardComponent extends JLabel implements com.monopolydeal.model.Inte
             // price upward
             int temp = 50;
             for(int i = 0; i < ((DoubleWildCard) this.card).getPriceUpward().length; i++) {
-//                g.drawRect(5, temp, 20, 20);
-//                g.drawString(Integer.toString(i+1), 12, temp+15);
                 if(i == ((DoubleWildCard) this.card).getPriceUpward().length - 1) {
                     g.setFont(Resources.CARD_FULL_SET_FONT);
                     g.drawString("full set", 32,temp+6);
@@ -305,41 +303,41 @@ public class CardComponent extends JLabel implements com.monopolydeal.model.Inte
     private void paintActionCardInfo(Graphics2D g){
         int action = ((ActionCard)this.card).getAction();
         if(action == ActionCard.DRAW){
-            g.drawString("Draw two cards", 8, 40);
-            g.drawString("from deck and", 10, 55);
-            g.drawString("add to your hand", 5, 70);
+            g.drawString("Pick up 2 extra", 8, 40);
+            g.drawString("cards from the", 10, 55);
+            g.drawString("draw pile.", 5, 70);
         }else if(action == ActionCard.STEAL1){
-            g.drawString("Steal one card", 11, 40);
-            g.drawString("from your", 25, 55);
-            g.drawString("opponents hand", 5, 70);
+            g.drawString("Steal a property", 11, 40);
+            g.drawString("card from the", 25, 55);
+            g.drawString("next player.", 5, 70);
         }else if(action == ActionCard.STEAL3){
-            g.drawString("Steal one card", 10, 40);
-            g.drawString("set from your", 13, 55);
-            g.drawString("opponents hand.", 5, 70);
+            g.drawString("Steal a property", 10, 40);
+            g.drawString("card set from the", 13, 55);
+            g.drawString("next player.", 5, 70);
         }else if(action == ActionCard.TRADE){
-            g.drawString("Select one card", 8, 40);
-            g.drawString("from your hand", 10, 55);
-            g.drawString("to swap with your", 4, 70);
-            g.drawString("opponents hand", 5, 85);
+            g.drawString("Swap another player's", 8, 40);
+            g.drawString("property card", 10, 55);
+            g.drawString("with one from your", 4, 70);
+            g.drawString("property collection.", 5, 85);
         }else if(action == ActionCard.TAKE_MONEY){
-            g.drawString("Steal $5M from", 10, 25);
-            g.drawString("your opponent. If", 5, 40);
-            g.drawString("they do not have", 6, 55);
-            g.drawString("enough money,", 8, 70);
-            g.drawString("take equivalent", 8, 85);
-            g.drawString("in property value", 5, 100);
+            g.drawString("Use this card", 10, 25);
+            g.drawString("to demand", 5, 40);
+            g.drawString("5 millions", 6, 55);
+            g.drawString("from one other", 8, 70);
+            g.drawString("player", 8, 85);
+//            g.drawString("in property value", 5, 100);
         }else if(action == ActionCard.DOUBLE_RENT){
-            g.drawString("Double the", 20, 40);
-            g.drawString("payout of tariff", 10, 55);
-            g.drawString("cards", 33, 70);
+            g.drawString("Play with a", 20, 40);
+            g.drawString("standard Rent", 10, 55);
+            g.drawString("to double it.", 33, 70);
         }else if(action == ActionCard.BIRTHDAY){
-            g.drawString("Gain $2M and", 12, 40);
-            g.drawString("add one card", 13, 55);
-            g.drawString("to your hand", 15, 70);
+            g.drawString("All players pay", 12, 40);
+            g.drawString("you 2 millions", 13, 55);
+            g.drawString("Happy Birthday!", 15, 70);
         }else if(action == ActionCard.BLOCK){
-            g.drawString("Block opponent", 8, 40);
-            g.drawString("action card use", 8, 55);
-            g.drawString("for two turns", 15, 70);
+            g.drawString("Use this card", 8, 40);
+            g.drawString("to avoid being", 8, 55);
+            g.drawString("effected by others.", 15, 70);
         }
     }
 

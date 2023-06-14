@@ -211,6 +211,8 @@ public class GameController{
             currentCharacter.addCard(deck.deal());
         }
         currentCharacter.addMoney(2);
+        Character opponent = characters[getOpponent()];
+        opponent.charge(2);
         currentCharacter.removeCard(card);
         currentCharacter.move();
     }

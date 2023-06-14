@@ -58,7 +58,7 @@ public class WinScreen extends BaseScreen implements ActionListener {
 
     public void update(){
         info.setText("Congratulation! "
-                + Resources.AVATAR_NAME[controller.getWinner().getAvatarIndex()] + " Wins!");
+                + Resources.AVATAR_NAME[controller.getWinner().getAvatarIndex()] + " is the Winner!");
     }
 
     @Override

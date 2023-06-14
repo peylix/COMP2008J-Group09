@@ -312,7 +312,7 @@ public class GameScreen extends BaseScreen {
                         currentCard  = card;
                         DoubleWildCard doubleWildCard = (DoubleWildCard) currentCard;
                         String[] options = {"Upward", "Downward"};
-                        int selectedOption = JOptionPane.showOptionDialog(null, "Choose an option", "Double Wild Card", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                        int selectedOption = JOptionPane.showOptionDialog(null, "Which color would you like it to be", "Double Wild Card", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
                         if (selectedOption == 0) {
                             // Option 1 selected
                             doubleWildCard.setCurrentColor(doubleWildCard.getColorUpward());
