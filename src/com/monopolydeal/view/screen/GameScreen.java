@@ -14,7 +14,8 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class GameScreen extends BaseScreen {
-    private ImageIcon woodenButton = new ImageIcon(Resources.IMG_WOODEN_BUTTON);
+    private ImageIcon stdButton = new ImageIcon(Resources.IMG_STD_BUTTON);
+    private ImageIcon quitButton = new ImageIcon(Resources.IMG_QUIT_BUTTON);
 
     private JLabel title;
 
@@ -156,7 +157,7 @@ public class GameScreen extends BaseScreen {
         turnLabel.addMouseListener(buttonListener);
         add(turnLabel);
         // next turn
-        nextTurn = new JButton(woodenButton);
+        nextTurn = new JButton(stdButton);
         nextTurn.setBounds(40, 470, 110, 66);
         nextTurn.setBorder(null);
         nextTurn.setContentAreaFilled(false);
@@ -165,14 +166,14 @@ public class GameScreen extends BaseScreen {
         // quit label
         quitLabel = new JLabel();
         quitLabel.setText(Resources.BTN_QUIT_TEXT);
-        quitLabel.setForeground(Color.WHITE);
+        quitLabel.setForeground(Color.RED);
         quitLabel.setFont(Resources.WOODEN_BUTTON_TEXT_FONT);
-        quitLabel.setBounds(72,570,130,20);
+        quitLabel.setBounds(918,490,130,20);
         quitLabel.addMouseListener(buttonListener);
         add(quitLabel);
         // quit
-        quit = new JButton(woodenButton);
-        quit.setBounds(40, 550, 110, 66);
+        quit = new JButton(quitButton);
+        quit.setBounds(880, 470, 110, 66);
         quit.setBorder(null);
         quit.setContentAreaFilled(false);
         quitLabel.addMouseListener(buttonListener);

@@ -10,9 +10,11 @@ public class Resources {
     public static final String IMG_LOGO = "assets/images/logo.png";
     public static final String IMG_LOGO_SMALL = "assets/images/logo_small.png";
     public static final String IMG_BUTTON = "assets/images/button_img.png";
-    public static final String IMG_WOODEN_BUTTON ="assets/images/wooden_button.png";
+    public static final String IMG_STD_BUTTON ="assets/images/std_button.png";
+    public static final String IMG_QUIT_BUTTON = "assets/images/quit_button.png";
     public static final String IMG_HIDE_LOGO = "assets/images/hide_logo.png";
     public static final String IMG_WILD_CARD = "assets/images/wildcard.png";
+
 
     public static final String FILE_DECK = "assets/base_deck.txt";
 
