@@ -168,7 +168,7 @@ public class GameScreen extends BaseScreen {
         quitLabel.setText(Resources.BTN_QUIT_TEXT);
         quitLabel.setForeground(Color.RED);
         quitLabel.setFont(Resources.WOODEN_BUTTON_TEXT_FONT);
-        quitLabel.setBounds(918,490,130,20);
+        quitLabel.setBounds(915,490,130,20);
         quitLabel.addMouseListener(buttonListener);
         add(quitLabel);
         // quit
