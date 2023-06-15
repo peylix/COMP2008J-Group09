@@ -9,6 +9,8 @@ public class ActionCard extends Card {
     public static final int DOUBLE_RENT = 5;
     public static final int BIRTHDAY = 6;
     public static final int BLOCK = 7;
+    public static final int HOUSE = 8;
+    public static final int HOTEL = 9;
 
     private int action;
 

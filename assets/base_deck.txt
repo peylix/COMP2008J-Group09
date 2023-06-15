@@ -70,6 +70,12 @@ My Birthday	action	2	birthday
 JustSayNo	action	4	no
 JustSayNo	action	4	no
 JustSayNo	action	4	no
+House	action	4	house
+House	action	4	house
+House	action	4	house
+Hotel	action	4	hotel
+Hotel	action	4	hotel
+Hotel	action	4	hotel
 Rent	action	1	rent	254,231,15	238,57,36
 Rent	action	1	rent	254,231,15	238,57,36
 Rent	action	1	rent	247,126,35	239,56,120

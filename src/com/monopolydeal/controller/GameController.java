@@ -4,9 +4,13 @@ import com.monopolydeal.model.CardDeck;
 import com.monopolydeal.model.CardSet;
 import com.monopolydeal.model.Character;
 import com.monopolydeal.model.card.Card;
+import com.monopolydeal.model.card.DoubleWildCard;
+import com.monopolydeal.model.card.PropertyCard;
+import com.monopolydeal.model.card.WildCard;
 import com.monopolydeal.util.DeckReader;
 import com.monopolydeal.view.CardComponent;
 import com.monopolydeal.view.GameFrame;
+
 
 import javax.swing.*;
 import java.awt.*;
@@ -271,6 +275,79 @@ public class GameController{
             }
         }
     }
+
+
+    public Color setHouse(Card card, Card thisCard) {
+        if (currentCharacter.house) {
+            return null;
+        }
+        if (card instanceof PropertyCard) {
+            currentCharacter.houseColor = ((PropertyCard) card).getColor();
+            if (((PropertyCard) card).getColor().equals(new Color(89,12,56)) || ((PropertyCard) card).getColor().equals(new Color(96,96,96))) {
+                return null;
+            }
+            int[] price = ((PropertyCard) card).getPrice();
+            for (int i = 0; i < price.length; i++) {
+                price[i] = price[i] + 2;
+            }
+            ((PropertyCard) card).setPrice(price);
+        } else if (card instanceof WildCard) {
+            currentCharacter.houseColor = ((WildCard) card).getColor();
+            int[] price = ((WildCard) card).getPrice();
+            for (int i = 0; i < price.length; i++) {
+                price[i] = price[i] + 2;
+            }
+            ((WildCard) card).setPrice(price);
+        } else if (card instanceof DoubleWildCard) {
+            currentCharacter.houseColor = ((DoubleWildCard) card).getCurrentColor();
+            int[] price = ((DoubleWildCard) card).getCurrentPrice();
+            for (int i = 0; i < price.length; i++) {
+                price[i] = price[i] + 2;
+            }
+            ((DoubleWildCard) card).setCurrentPrice(price);
+        }
+        currentCharacter.house = true;
+        currentCharacter.removeCard(thisCard);
+        return currentCharacter.houseColor;
+    }
+
+    public Color setHotel(Card card, Card thisCard) {
+        if (!currentCharacter.house) {
+            return null;
+        }
+        if (currentCharacter.hotel) {
+            return null;
+        }
+        if (card instanceof PropertyCard) {
+            currentCharacter.hotelColor = ((PropertyCard) card).getColor();
+            if (((PropertyCard) card).getColor().equals(new Color(89,12,56)) || ((PropertyCard) card).getColor().equals(new Color(96,96,96))) {
+                return null;
+            }
+            int[] price = ((PropertyCard) card).getPrice();
+            for (int i = 0; i < price.length; i++) {
+                price[i] = price[i] + 2;
+            }
+            ((PropertyCard) card).setPrice(price);
+        } else if (card instanceof WildCard) {
+            currentCharacter.hotelColor = ((WildCard) card).getColor();
+            int[] price = ((WildCard) card).getPrice();
+            for (int i = 0; i < price.length; i++) {
+                price[i] = price[i] + 2;
+            }
+            ((WildCard) card).setPrice(price);
+        } else if (card instanceof DoubleWildCard) {
+            currentCharacter.hotelColor = ((DoubleWildCard) card).getCurrentColor();
+            int[] price = ((DoubleWildCard) card).getCurrentPrice();
+            for (int i = 0; i < price.length; i++) {
+                price[i] = price[i] + 2;
+            }
+            ((DoubleWildCard) card).setCurrentPrice(price);
+        }
+        currentCharacter.hotel = true;
+        currentCharacter.removeCard(thisCard);
+        return currentCharacter.hotelColor;
+    }
+
 
     public void reset(){
         characters = new Character[CHARACTER_AMOUNT];

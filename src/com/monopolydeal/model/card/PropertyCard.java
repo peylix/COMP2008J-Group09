@@ -29,5 +29,8 @@ public class PropertyCard extends Card {
     public int[] getPrice() {
         return price;
     }
+    public void setPrice(int[] newPrice) {
+        this.price = newPrice;
+    }
 }
 

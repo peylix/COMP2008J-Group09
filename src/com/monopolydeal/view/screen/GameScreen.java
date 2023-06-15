@@ -25,6 +25,8 @@ public class GameScreen extends BaseScreen {
     private JLabel[] money;
     private JLabel[] block;
     private JLabel[] doubleRent;
+    private JLabel[] houses;
+    private JLabel[] hotels;
 
     private JButton nextTurn;
     private JLabel  nextTurnLabel;
@@ -40,6 +42,8 @@ public class GameScreen extends BaseScreen {
     private Card tradeCard2;
     private int tradeCharacter1;
     private int tradeCharacter2;
+    private String houseState = "";
+    private String hotelState = "";
 
     private ButtonListener buttonListener;
     private CardListener cardListener;
@@ -57,6 +61,8 @@ public class GameScreen extends BaseScreen {
         money = new JLabel[3];
         block = new JLabel[3];
         doubleRent = new JLabel[3];
+        houses = new JLabel[3];
+        hotels = new JLabel[3];
         cardComponents = new ArrayList<>();
         propertyComponents = new ArrayList<>();
         buttonListener = new ButtonListener();
@@ -124,9 +130,6 @@ public class GameScreen extends BaseScreen {
                 for (int i= property.size() - 1; i>=0; i--) {
                     PropertyComponent component = new PropertyComponent(property.getCard(i),
                             offsetX + i * 5, 70 + 165 * index, index);
-//                    if (controller.getSteal1Selected(index)||controller.getSteal3Selected(index)) {
-//                        component.setBorder(BorderFactory.createLineBorder(Resources.SELECTED_COLOR, 10));
-//                    }
                     component.addMouseListener(wildListener);
                     component.addMouseListener(rentListener);
                     component.addMouseListener(stealListener);
@@ -207,6 +210,14 @@ public class GameScreen extends BaseScreen {
         doubleRent[index] = new JLabel();
         doubleRent[index].setFont(Resources.STATE_FONT);
         add(doubleRent[index]);
+        // house state
+        houses[index] = new JLabel();
+        houses[index].setFont(Resources.STATE_FONT);
+        add(houses[index]);
+        // hotel state
+        hotels[index] = new JLabel();
+        hotels[index].setFont(Resources.STATE_FONT);
+        add(hotels[index]);
     }
 
     private void adjustPosition(){
@@ -218,6 +229,8 @@ public class GameScreen extends BaseScreen {
         money[0].setBounds(80,50, 60, 20);
         block[0].setBounds(170,30, 200, 20);
         doubleRent[0].setBounds(170,50, 200, 20);
+        houses[0].setBounds(170,70, 200, 20);
+        hotels[0].setBounds(170,90, 200, 20);
         // character 1
         player[1].setText("Player Two");
         player[1].setBounds(947,10,110,12);
@@ -226,6 +239,8 @@ public class GameScreen extends BaseScreen {
         money[1].setBounds(885,50, 60, 20);
         block[1].setBounds(780,30, 200, 20);
         doubleRent[1].setBounds(780,50, 200, 20);
+        houses[1].setBounds(780,70, 200, 20);
+        hotels[1].setBounds(780,90, 200, 20);
         // character 2
         player[2].setText("Player Three");
         player[2].setBounds(22,340,110,12);
@@ -234,6 +249,8 @@ public class GameScreen extends BaseScreen {
         money[2].setBounds(80,390, 60, 20);
         block[2].setBounds(170,370, 200, 20);
         doubleRent[2].setBounds(170,390, 200, 20);
+        houses[2].setBounds(170,410, 200, 20);
+        hotels[2].setBounds(170,430, 200, 20);
     }
 
     @Override
@@ -255,6 +272,20 @@ public class GameScreen extends BaseScreen {
             }else{
                 doubleRent[i].setForeground(Color.RED);
                 doubleRent[i].setText("X Double Rent");
+            }
+            if (controller.getCharacter(i).isHouseUsed()) {
+                houses[i].setForeground(Color.GREEN);
+                houses[i].setText("√ House Used: " + houseState);
+            } else {
+                houses[i].setForeground(Color.RED);
+                houses[i].setText("X House Not Used");
+            }
+            if (controller.getCharacter(i).isHotelUsed()) {
+                hotels[i].setForeground(Color.GREEN);
+                hotels[i].setText("√ Hotel Used: " + hotelState);
+            } else {
+                hotels[i].setForeground(Color.RED);
+                hotels[i].setText("X Hotel Not Used");
             }
             if(controller.getTurn()==i){
                 images[i].setBorder(Resources.SELECTED_BORDER);
@@ -414,6 +445,55 @@ public class GameScreen extends BaseScreen {
                             update();
                         }else if(actionCard.getAction() == ActionCard.BLOCK){
                             controller.block(card);
+                            update();
+                        } else if (actionCard.getAction() == ActionCard.HOUSE) {
+                            ArrayList<CardSet> propertiesList = controller.getCurrentCharacter().getProperties();
+                            Color houseColor = null;
+//                            Color color1 = propertiesList.get(0).getColor();
+//                            Color color2 = propertiesList.get(1).getColor();
+//                            Color color3 = propertiesList.get(2).getColor();
+                            String[] options = {"First Set", "Second Set", "Third Set"};
+                            int selectedOption = JOptionPane.showOptionDialog(null, "While set of properties would you like to apply the house card?", "House Card", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                            if (selectedOption == 0) {
+                                houseColor = controller.setHouse(propertiesList.get(0).getCard(0), card);
+                                houseState = "First Set";
+                            } else if (selectedOption == 1) {
+                                houseColor = controller.setHouse(propertiesList.get(1).getCard(0), card);
+                                houseState = "Second Set";
+                            } else if (selectedOption == 2) {
+                                houseColor = controller.setHouse(propertiesList.get(2).getCard(0), card);
+                                houseState = "Third Set";
+                            }
+                            if (houseColor == null) {
+                                showNotice("You cannot apply the house card... Do something else!");
+                            }
+                            update();
+                        }else if (actionCard.getAction() == ActionCard.HOTEL) {
+                            ArrayList<CardSet> propertiesList = controller.getCurrentCharacter().getProperties();
+                            Color houseColor = null;
+                            String[] options = {"First Set", "Second Set", "Third Set"};
+                            int selectedOption = JOptionPane.showOptionDialog(null, "While set of properties would you like to apply the house card?", "House Card", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+                            if (selectedOption == 0) {
+                                if (houseState.equals("First Set")) {
+                                    houseColor = controller.setHotel(propertiesList.get(0).getCard(0), card);
+                                    hotelState = "First Set";
+                                }
+
+                            } else if (selectedOption == 1) {
+                                if (houseState.equals("Second Set")) {
+                                    houseColor = controller.setHotel(propertiesList.get(1).getCard(0), card);
+                                    houseState = "Second Set";
+                                }
+                            } else if (selectedOption == 2) {
+                                if (houseState.equals("Third Set")) {
+                                    houseColor = controller.setHotel(propertiesList.get(2).getCard(0), card);
+                                    houseState = "Third Set";
+                                }
+
+                            }
+                            if (houseColor == null) {
+                                showNotice("You cannot apply the house card... Do something else!");
+                            }
                             update();
                         }
                     }

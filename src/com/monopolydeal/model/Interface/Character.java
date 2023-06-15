@@ -21,7 +21,7 @@ public interface Character {
     Card getRemoveCardSteal();
     CardSet removeSet(Color color);
     int getRentFee(Color color);
-    Card charge(int fee);
+    int charge(int fee);
     int findProperFee(int fee);
     int fullSet();
 }

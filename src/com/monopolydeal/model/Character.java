@@ -17,6 +17,10 @@ public class Character implements com.monopolydeal.model.Interface.Character {
     private int blockTurns = 0;
     private int moves = 3;
     private boolean doubleRent = false;
+    public boolean house = false;
+    public boolean hotel = false;
+    public Color houseColor = null;
+    public Color hotelColor = null;
     private ArrayList<CardSet> properties;
     private ArrayList<Card> hand;
     private ArrayList<Integer> dollars;
@@ -241,5 +245,14 @@ public class Character implements com.monopolydeal.model.Interface.Character {
             }
         }
         return count;
+    }
+
+
+    public boolean isHouseUsed() {
+        return house;
+    }
+
+    public boolean isHotelUsed() {
+        return hotel;
     }
 }

@@ -70,22 +70,26 @@ public class DeckReader {
             return new RentCard(name, value, primaryColor, secondaryColor);
         }
 
-        if(params[3].equals("draw")){
+        if (params[3].equals("draw")) {
             action = ActionCard.DRAW;
-        }else if(params[3].equals("steal1")){
+        } else if (params[3].equals("steal1")) {
             action = ActionCard.STEAL1;
-        }else if(params[3].equals("steal3")){
+        } else if (params[3].equals("steal3")) {
             action = ActionCard.STEAL3;
-        }else if(params[3].equals("trade")){
+        } else if (params[3].equals("trade")) {
             action = ActionCard.TRADE;
-        }else if(params[3].equals("takemoney")){
+        } else if (params[3].equals("takemoney")) {
             action = ActionCard.TAKE_MONEY;
-        }else if(params[3].equals("doublerent")){
+        } else if (params[3].equals("doublerent")) {
             action = ActionCard.DOUBLE_RENT;
-        }else if(params[3].equals("birthday")){
+        } else if (params[3].equals("birthday")) {
             action = ActionCard.BIRTHDAY;
-        }else if(params[3].equals("no")){
+        } else if (params[3].equals("no")) {
             action = ActionCard.BLOCK;
+        } else if (params[3].equals("house")) {
+            action = ActionCard.HOUSE;
+        } else if (params[3].equals("hotel")) {
+            action = ActionCard.HOTEL;
         }
         return new ActionCard(name, value, action);
     }
