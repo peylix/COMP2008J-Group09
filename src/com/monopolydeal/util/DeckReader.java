@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 
 public class DeckReader {
+    // This class is for reading data from the card_types.txt and creating card objects based on these data.
 
     public static CardDeck generateDeck() {
         CardDeck deck = new CardDeck();

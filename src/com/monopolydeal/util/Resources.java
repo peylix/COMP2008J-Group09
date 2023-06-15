@@ -16,7 +16,7 @@ public class Resources {
     public static final String IMG_WILD_CARD = "assets/images/wildcard.png";
 
 
-    public static final String FILE_DECK = "assets/base_deck.txt";
+    public static final String FILE_DECK = "assets/card_types.txt";
 
     public static final String BTN_EXIT_TEXT = "Exit";
     public static final String BTN_START_TEXT = "Start Game";
