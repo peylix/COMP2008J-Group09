@@ -3,6 +3,7 @@ package com.monopolydeal.model.card;
 import java.awt.*;
 
 public class WildCard extends Card {
+    // A plain old Java object for storing data of a wild card.
     private Color color;
     private int[] price;
 

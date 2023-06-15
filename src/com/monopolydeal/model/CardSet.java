@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class CardSet {
+    // It represents a set of cards.
     private ArrayList<Card> set;
     private Color color;
 

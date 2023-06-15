@@ -3,6 +3,7 @@ package com.monopolydeal.model.card;
 import java.awt.*;
 
 public class DoubleWildCard extends Card {
+    // A plain old Java object for storing data of a double wild card.
     private Color colorUpward;
     private Color colorDownward;
     private int[] priceUpward;

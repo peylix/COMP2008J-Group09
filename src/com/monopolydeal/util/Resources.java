@@ -4,6 +4,9 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class Resources {
+    // This class stores different directories and names so that the code in other classes
+    // do not need to contains these directories, which will make the code cleaner and easier
+    // to maintain.
     public static final double VERSION = 1.0;
 
     public static final String IMG_BG = "assets/images/background.png";

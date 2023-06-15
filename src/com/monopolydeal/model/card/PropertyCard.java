@@ -3,6 +3,7 @@ package com.monopolydeal.model.card;
 import java.awt.*;
 
 public class PropertyCard extends Card {
+    // A plain old Java object for storing data of a property card.
     private Color color;
     private int[] price;
 

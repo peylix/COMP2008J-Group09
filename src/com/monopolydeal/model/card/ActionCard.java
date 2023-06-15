@@ -1,6 +1,7 @@
 package com.monopolydeal.model.card;
 
 public class ActionCard extends Card {
+    // A plain old Java object for storing data of a action card.
     public static final int DRAW = 0;
     public static final int STEAL1 = 1;
     public static final int STEAL3 = 2;

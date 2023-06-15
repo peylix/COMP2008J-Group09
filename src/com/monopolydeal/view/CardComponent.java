@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class CardComponent extends JLabel implements com.monopolydeal.model.Interface.CardComponent {
+    // Drawing cards of different types.
     private Card card;
     private  Color color_primary;
     private Color color_secondary;
