@@ -308,6 +308,46 @@ public class GameScreen extends BaseScreen {
                         update();
                     }else if(card.getType()== Card.WILD_CARD){
                         currentCard  = card;
+                        WildCard wildCard = (WildCard) currentCard;
+                        String[] options = {"yellow", "red", "orange", "pink", "light blue", "green", "blue", "brown", "dark blue"};
+                        int[] defaultPrice = {2, 3, 6};
+                        int selectedOption = JOptionPane.showOptionDialog(null, "Which color would you like it to be", "Wild Card", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+                        if (selectedOption == 0) {
+                            // Set the color to YELLOW.
+                            wildCard.setColor(new Color(254,231,15));
+                        } else if (selectedOption == 1) {
+                            // Set the color to RED.
+                            wildCard.setColor(new Color(238,57,36));
+                        } else if (selectedOption == 2) {
+                            // Set the color to ORANGE.
+                            wildCard.setColor(new Color(247,126,35));
+                        } else if (selectedOption == 3) {
+                            // Set the color to PINK.
+                            wildCard.setColor(new Color(239,56,120));
+                        } else if (selectedOption == 4) {
+                            // Set the color to LIGHT BLUE.
+                            wildCard.setColor(new Color(135,165,215));
+                        } else if (selectedOption == 5) {
+                            // Set the color to GREEN.
+                            wildCard.setColor(new Color(19,165,92));
+                        } else if (selectedOption == 6) {
+                            // Set the color to BLUE.
+                            wildCard.setColor(new Color(0,102,204));
+                        } else if (selectedOption == 7) {
+                            // Set the color to BROWN.
+                            wildCard.setColor(new Color(204,102,0));
+                        } else if (selectedOption == 8) {
+                            // Set the color to DARK BLUE.
+                            wildCard.setColor(new Color(0,76,153));
+
+                        }
+                        wildCard.setPrice(defaultPrice);
+                        controller.addProperty(card);
+                        update();
+
+
+
                     } else if (card.getType() == Card.DOUBLE_WILD_CARD) {
                         currentCard  = card;
                         DoubleWildCard doubleWildCard = (DoubleWildCard) currentCard;
